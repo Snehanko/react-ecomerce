@@ -1,9 +1,10 @@
 import React from 'react'
+import Products from './Products'
 
 function Dashboard() {
     return (
         <div>
-            <h1>DashBoard</h1>
+            <Products />
         </div>
     )
 }
