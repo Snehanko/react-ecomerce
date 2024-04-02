@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import { Link, NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { store } from "../store/store";
 
 function Navbar() {
+
+    const cartProducts = useSelector(store => store.cart)
+
     const [isOpen, setIsOpen] = useState(false);
     return (
         <div>
@@ -25,7 +30,7 @@ function Navbar() {
                                     </NavLink>
                                     <NavLink to="/cart"
                                         className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"
-                                    >My Cart 0
+                                    >My Cart {cartProducts.length}
                                     </NavLink>
                                 </div>
                             </div>
@@ -99,7 +104,7 @@ function Navbar() {
                                     to="/cart"
                                     className="hover:bg-gray-700 text-white block px-3 py-2 rounded-md text-base font-medium"
                                 >
-                                    My Cart 0
+                                    My Cart {cartProducts.length}
                                 </NavLink>
                             </div>
                         </div>

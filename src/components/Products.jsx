@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { addProducts } from "../store/cartSlice"
 
 function Products() {
     const [newProducts, setProducts] = useState([])
     const [isLoading, setLoading] = useState(true)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const fetchingProducts = async () => {
@@ -19,9 +22,13 @@ function Products() {
         fetchingProducts()
     }, [])
 
+
+    const addToCart = (product) => {
+        dispatch((addProducts(product)))
+    }
+
     return (
         <div>
-            <h1>Products Dashboard</h1>
             {
                 isLoading ? <h1>Loading Data</h1> :
                     newProducts ? (
@@ -36,6 +43,11 @@ function Products() {
                                             </div>
                                             <h3 className="mt-4 text-sm text-gray-700">{product.title}</h3>
                                             <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
+                                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                                                onClick={() => addToCart(product)}
+                                            >
+                                                Add to Cart
+                                            </button>
                                         </a>)
                                     }
                                 </div>
