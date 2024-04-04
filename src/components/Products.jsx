@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addProducts } from "../store/cartSlice"
+import { getProducts } from '../store/productSlice'
+import { store } from "../store/store"
 
 function Products() {
-    const [newProducts, setProducts] = useState([])
+    //const [newProducts, setProducts] = useState([])
     const [isLoading, setLoading] = useState(true)
     const dispatch = useDispatch()
+    const newProducts = useSelector((store) => store.product.data)
 
     useEffect(() => {
         const fetchingProducts = async () => {
-            try {
-                const response = await fetch('https://fakestoreapi.com/products')
-                const data = await response.json()
-                setProducts(data)
-                setLoading(false)
-            } catch (err) {
-                alert("Failure to Fetch data")
-            }
+            dispatch(getProducts())
+            setLoading(false)
         }
 
         fetchingProducts()
