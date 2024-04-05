@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addProducts } from "../store/cartSlice"
 import { getProducts } from '../store/productSlice'
-import { store } from "../store/store"
+import { statusCode } from '../util/statusCode'
+
 
 function Products() {
-    //const [newProducts, setProducts] = useState([])
     const [isLoading, setLoading] = useState(true)
     const dispatch = useDispatch()
     const newProducts = useSelector((store) => store.product.data)
@@ -22,6 +22,18 @@ function Products() {
 
     const addToCart = (product) => {
         dispatch((addProducts(product)))
+    }
+
+    const checkFetchStatus = () => {
+        if (status === statusCode.LOADING) {
+            return true;
+        }
+        else if (status === statusCode.ERROR) {
+            return true;
+        }
+        else if (status === statusCode.IDLE) {
+            return false;
+        }
     }
 
     return (

@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { data } from "autoprefixer";
+import { statusCode } from "../util/statusCode";
 
 const initialState = {
   data: [],
-  loading: true,
-  error: null,
+  status: "idle",
 };
 
 const productSlice = createSlice({
@@ -18,15 +17,14 @@ const productSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getProducts.fulfilled, (state, action) => {
       state.data = action.payload;
-      state.loading = false;
+      state.status = statusCode.IDLE;
     });
     builder.addCase(getProducts.rejected, (state, action) => {
       state.data = [];
-      state.error = action.payload;
-      state.loading = true;
+      state.status = statusCode.ERROR;
     });
     builder.addCase(getProducts.pending, (state, action) => {
-      state.loading = true;
+      state.status = statusCode.LOADING;
     });
   },
 });
